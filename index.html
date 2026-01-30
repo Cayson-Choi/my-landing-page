@@ -5,33 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cayson Tech - AI & IT Solutions</title>
     <style>
-        *, *::before, *::after {
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        :root {
-            --primary: #6366f1;
-            --primary-dark: #4f46e5;
-            --accent: #06b6d4;
-            --accent-light: #22d3ee;
-            --dark: #0f0f23;
-            --dark-light: #1a1a35;
-            --text: #e5e7eb;
-            --text-muted: #9ca3af;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
         body {
             font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: var(--dark);
-            color: var(--text);
-            line-height: 1.6;
+            background: #000000;
             overflow-x: hidden;
+            color: white;
         }
 
         nav {
@@ -43,9 +27,9 @@
             justify-content: space-between;
             align-items: center;
             z-index: 100;
-            background: rgba(15, 15, 35, 0.9);
+            background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255,255,255,0.2);
         }
 
         .logo {
@@ -56,13 +40,6 @@
             letter-spacing: -0.5px;
         }
 
-        .logo span {
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
         .nav-links {
             display: flex;
             gap: 32px;
@@ -70,7 +47,7 @@
         }
 
         .nav-links a {
-            color: var(--text-muted);
+            color: rgba(255,255,255,0.9);
             text-decoration: none;
             font-size: 0.95em;
             font-weight: 500;
@@ -81,64 +58,34 @@
             color: white;
         }
 
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: 1;
+        }
+
+        .content-overlay {
+            position: relative;
+            z-index: 2;
+            pointer-events: none;
+        }
+
         .hero {
             min-height: 100vh;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: space-between;
-            padding: 140px 60px 80px;
-            position: relative;
-            overflow: hidden;
-            gap: 60px;
+            justify-content: center;
+            text-align: center;
+            padding: 140px 40px 80px;
         }
 
-        .hero::before {
-            content: '';
-            position: absolute;
-            width: 800px;
-            height: 800px;
-            background: radial-gradient(circle, rgba(99,102,241,0.12), transparent 70%);
-            top: -200px;
-            right: -200px;
-            border-radius: 50%;
-            animation: pulse 8s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 0.12; }
-            50% { transform: scale(1.1); opacity: 0.18; }
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            max-width: 600px;
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 18px;
-            border: 1px solid rgba(99,102,241,0.4);
-            border-radius: 24px;
-            font-size: 0.85em;
-            color: var(--primary);
-            margin-bottom: 28px;
-            background: rgba(99,102,241,0.08);
-        }
-
-        .badge-dot {
-            width: 6px;
-            height: 6px;
-            background: var(--accent);
-            border-radius: 50%;
-            animation: blink 2s infinite;
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
+        .hero-text {
+            pointer-events: auto;
+            margin-bottom: 40px;
         }
 
         .hero h1 {
@@ -147,311 +94,61 @@
             line-height: 1.1;
             margin-bottom: 24px;
             color: white;
-            letter-spacing: -1px;
-        }
-
-        .hero h1 .highlight {
-            background: linear-gradient(135deg, var(--primary), var(--accent-light));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.2);
         }
 
         .hero p {
-            font-size: 1.2em;
-            color: var(--text-muted);
+            font-size: 1.3em;
+            color: rgba(255,255,255,0.9);
             margin-bottom: 36px;
-            line-height: 1.7;
+            max-width: 600px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
         .hero-buttons {
             display: flex;
             gap: 16px;
+            justify-content: center;
             flex-wrap: wrap;
         }
 
         .btn {
-            padding: 14px 32px;
-            border-radius: 10px;
-            font-size: 1em;
+            padding: 16px 40px;
+            border-radius: 50px;
+            font-size: 1.1em;
             font-weight: 600;
             text-decoration: none;
             transition: all 0.3s;
             cursor: pointer;
             border: none;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-            box-shadow: 0 4px 24px rgba(99,102,241,0.3);
+            background: white;
+            color: #667eea;
         }
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 32px rgba(99,102,241,0.5);
+            box-shadow: 0 6px 30px rgba(0,0,0,0.25);
         }
 
         .btn-outline {
-            background: transparent;
-            color: var(--text);
-            border: 1.5px solid rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid white;
         }
 
         .btn-outline:hover {
-            border-color: rgba(255,255,255,0.4);
-            background: rgba(255,255,255,0.03);
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
         }
 
-        /* Robot Character */
-        .robot-container {
-            position: relative;
-            width: 400px;
-            height: 500px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            perspective: 1500px;
-        }
-
-        .robot {
-            position: relative;
-            width: 280px;
-            height: 350px;
-            transform-style: preserve-3d;
-            transition: transform 0.2s ease-out;
-        }
-
-        /* Robot Head */
-        .robot-head {
-            position: relative;
-            width: 160px;
-            height: 180px;
-            background: linear-gradient(145deg, #2a2a4a, #1f1f3a);
-            border-radius: 40px;
-            margin: 0 auto 10px;
-            box-shadow:
-                0 10px 40px rgba(0,0,0,0.4),
-                inset 0 2px 10px rgba(99,102,241,0.1),
-                inset 0 -2px 10px rgba(0,0,0,0.3);
-            border: 3px solid rgba(99,102,241,0.3);
-            transition: transform 0.2s ease-out;
-            transform-style: preserve-3d;
-        }
-
-        .robot-head::before {
-            content: '';
-            position: absolute;
-            top: 20%;
-            left: -10px;
-            width: 30px;
-            height: 60%;
-            background: linear-gradient(90deg, transparent, rgba(99,102,241,0.15));
-            border-radius: 20px 0 0 20px;
-            transform: translateZ(-20px);
-        }
-
-        .robot-head::after {
-            content: '';
-            position: absolute;
-            top: 20%;
-            right: -10px;
-            width: 30px;
-            height: 60%;
-            background: linear-gradient(-90deg, transparent, rgba(99,102,241,0.15));
-            border-radius: 0 20px 20px 0;
-            transform: translateZ(-20px);
-        }
-
-        .robot-antenna {
-            position: absolute;
-            width: 4px;
-            height: 40px;
-            background: linear-gradient(to top, var(--primary), var(--accent));
-            top: -35px;
-            left: 50%;
-            transform: translateX(-50%) translateZ(10px);
-            border-radius: 2px;
-            box-shadow: 0 0 10px rgba(99,102,241,0.5);
-        }
-
-        .robot-antenna::after {
-            content: '';
-            position: absolute;
-            width: 16px;
-            height: 16px;
-            background: var(--accent);
-            border-radius: 50%;
-            top: -8px;
-            left: 50%;
-            transform: translateX(-50%);
-            box-shadow: 0 0 20px var(--accent);
-            animation: glow 2s ease-in-out infinite;
-        }
-
-        @keyframes glow {
-            0%, 100% { box-shadow: 0 0 20px var(--accent); }
-            50% { box-shadow: 0 0 30px var(--accent), 0 0 40px var(--accent); }
-        }
-
-        /* Robot Eyes */
-        .robot-eyes {
-            position: absolute;
-            top: 60px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 30px;
-        }
-
-        .eye {
-            position: relative;
-            width: 40px;
-            height: 40px;
-            background: white;
-            border-radius: 50%;
-            overflow: hidden;
-            box-shadow:
-                inset 0 2px 8px rgba(0,0,0,0.2),
-                0 2px 8px rgba(0,0,0,0.1);
-            transform: translateZ(25px);
-        }
-
-        .pupil {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: radial-gradient(circle at 30% 30%, #4f46e5, #1e1b4b);
-            border-radius: 50%;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        .pupil::after {
-            content: '';
-            position: absolute;
-            width: 6px;
-            height: 6px;
-            background: white;
-            border-radius: 50%;
-            top: 4px;
-            left: 5px;
-        }
-
-        /* Robot Mouth */
-        .robot-mouth {
-            position: absolute;
-            bottom: 50px;
-            left: 50%;
-            transform: translateX(-50%) translateZ(20px);
-            width: 80px;
-            height: 8px;
-            background: rgba(99,102,241,0.4);
-            border-radius: 4px;
-            display: flex;
-            gap: 3px;
-            padding: 2px 4px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-        }
-
-        .mouth-segment {
-            flex: 1;
-            background: var(--accent);
-            border-radius: 2px;
-            animation: speak 1.5s ease-in-out infinite;
-        }
-
-        .mouth-segment:nth-child(2) { animation-delay: 0.1s; }
-        .mouth-segment:nth-child(3) { animation-delay: 0.2s; }
-        .mouth-segment:nth-child(4) { animation-delay: 0.3s; }
-
-        @keyframes speak {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 1; }
-        }
-
-        /* Robot Body */
-        .robot-body {
-            position: relative;
-            width: 200px;
-            height: 140px;
-            background: linear-gradient(145deg, #2a2a4a, #1f1f3a);
-            border-radius: 20px;
-            margin: 0 auto;
-            box-shadow:
-                0 8px 30px rgba(0,0,0,0.4),
-                inset 0 2px 10px rgba(99,102,241,0.1),
-                inset 0 -2px 10px rgba(0,0,0,0.3);
-            border: 3px solid rgba(99,102,241,0.3);
-            transform-style: preserve-3d;
-        }
-
-        .robot-body::before {
-            content: '';
-            position: absolute;
-            top: 10%;
-            left: -8px;
-            width: 20px;
-            height: 80%;
-            background: linear-gradient(90deg, transparent, rgba(99,102,241,0.1));
-            border-radius: 10px 0 0 10px;
-            transform: translateZ(-15px);
-        }
-
-        .robot-body::after {
-            content: '';
-            position: absolute;
-            top: 10%;
-            right: -8px;
-            width: 20px;
-            height: 80%;
-            background: linear-gradient(-90deg, transparent, rgba(99,102,241,0.1));
-            border-radius: 0 10px 10px 0;
-            transform: translateZ(-15px);
-        }
-
-        .robot-panel {
-            position: absolute;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 140px;
-            height: 80px;
-            background: rgba(99,102,241,0.1);
-            border-radius: 12px;
-            border: 2px solid rgba(99,102,241,0.3);
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            padding: 12px;
-        }
-
-        .panel-light {
-            width: 100%;
-            height: 100%;
-            background: var(--primary);
-            border-radius: 4px;
-            opacity: 0.4;
-            animation: flicker 3s ease-in-out infinite;
-        }
-
-        .panel-light:nth-child(1) { animation-delay: 0s; }
-        .panel-light:nth-child(2) { animation-delay: 0.5s; }
-        .panel-light:nth-child(3) { animation-delay: 1s; }
-        .panel-light:nth-child(4) { animation-delay: 1.5s; }
-        .panel-light:nth-child(5) { animation-delay: 2s; }
-        .panel-light:nth-child(6) { animation-delay: 2.5s; }
-
-        @keyframes flicker {
-            0%, 100% { opacity: 0.4; }
-            50% { opacity: 1; }
-        }
-
-        /* Services Section */
         .services {
-            background: var(--dark-light);
+            background: rgba(255,255,255,0.95);
             padding: 120px 60px;
+            color: #333;
         }
 
         .section-title {
@@ -462,13 +159,12 @@
         .section-title h2 {
             font-size: 2.8em;
             font-weight: 800;
-            color: white;
+            color: #667eea;
             margin-bottom: 16px;
-            letter-spacing: -0.5px;
         }
 
         .section-title p {
-            color: var(--text-muted);
+            color: #666;
             font-size: 1.15em;
         }
 
@@ -481,35 +177,16 @@
         }
 
         .service-card {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.08);
+            background: white;
             border-radius: 20px;
             padding: 40px 32px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
             transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .service-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-            transform: scaleX(0);
-            transition: transform 0.3s;
         }
 
         .service-card:hover {
-            transform: translateY(-6px);
-            border-color: rgba(99,102,241,0.3);
-            box-shadow: 0 12px 40px rgba(0,0,0,0.3);
-        }
-
-        .service-card:hover::before {
-            transform: scaleX(1);
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
         }
 
         .service-icon {
@@ -519,103 +196,21 @@
 
         .service-card h3 {
             font-size: 1.4em;
-            color: white;
+            color: #667eea;
             margin-bottom: 12px;
             font-weight: 700;
         }
 
         .service-card p {
-            color: var(--text-muted);
+            color: #666;
             line-height: 1.7;
         }
 
-        /* Stats Section */
-        .stats {
-            padding: 100px 60px;
-            text-align: center;
-        }
-
-        .stats-grid {
-            display: flex;
-            justify-content: center;
-            gap: 80px;
-            flex-wrap: wrap;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .stat {
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 3.5em;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--primary), var(--accent-light));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 8px;
-        }
-
-        .stat-label {
-            color: var(--text-muted);
-            font-size: 1.05em;
-        }
-
-        /* CTA Section */
-        .cta {
-            text-align: center;
-            background: var(--dark-light);
-            padding: 120px 60px;
-        }
-
-        .cta h2 {
-            font-size: 3em;
-            font-weight: 800;
-            color: white;
-            margin-bottom: 20px;
-        }
-
-        .cta p {
-            color: var(--text-muted);
-            margin-bottom: 40px;
-            font-size: 1.2em;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
         footer {
+            background: rgba(0,0,0,0.3);
             text-align: center;
             padding: 50px 20px;
-            color: var(--text-muted);
-            border-top: 1px solid rgba(255,255,255,0.05);
-        }
-
-        @media (max-width: 1024px) {
-            .hero {
-                flex-direction: column;
-                text-align: center;
-                padding: 140px 40px 80px;
-            }
-
-            .hero-content {
-                max-width: 100%;
-            }
-
-            .hero-buttons {
-                justify-content: center;
-            }
-
-            .robot-container {
-                width: 300px;
-                height: 400px;
-            }
-
-            .robot {
-                transform: scale(0.85);
-            }
+            color: rgba(255,255,255,0.8);
         }
 
         @media (max-width: 768px) {
@@ -631,16 +226,12 @@
                 font-size: 2.5em;
             }
 
-            .section-title h2 {
-                font-size: 2em;
+            .hero p {
+                font-size: 1.1em;
             }
 
-            .services, .stats, .cta {
+            .services {
                 padding: 80px 24px;
-            }
-
-            .stats-grid {
-                gap: 50px;
             }
         }
     </style>
@@ -648,7 +239,7 @@
 <body>
 
     <nav>
-        <a href="#" class="logo">Cayson<span>Tech</span></a>
+        <a href="#" class="logo">CaysonTech</a>
         <ul class="nav-links">
             <li><a href="#services">Services</a></li>
             <li><a href="#about">About</a></li>
@@ -656,181 +247,271 @@
         </ul>
     </nav>
 
-    <section class="hero">
-        <div class="hero-content">
-            <div class="hero-badge">
-                <span class="badge-dot"></span>
-                AI & IT Solutions Leader
-            </div>
-            <h1>혁신적인 <span class="highlight">기술</span>로<br>미래를 설계합니다</h1>
-            <p>AI, IT, 전자/전기, 홈페이지 제작, 업무 자동화까지. Cayson Tech는 차세대 기술 솔루션으로 귀사의 디지털 전환을 완성합니다.</p>
-            <div class="hero-buttons">
-                <a href="#contact" class="btn btn-primary">상담 신청</a>
-                <a href="#services" class="btn btn-outline">서비스 보기</a>
-            </div>
-        </div>
+    <div id="canvas-container"></div>
 
-        <div class="robot-container">
-            <div class="robot" id="robot">
-                <div class="robot-head" id="robotHead">
-                    <div class="robot-antenna"></div>
-                    <div class="robot-eyes">
-                        <div class="eye">
-                            <div class="pupil" id="leftPupil"></div>
-                        </div>
-                        <div class="eye">
-                            <div class="pupil" id="rightPupil"></div>
-                        </div>
-                    </div>
-                    <div class="robot-mouth">
-                        <div class="mouth-segment"></div>
-                        <div class="mouth-segment"></div>
-                        <div class="mouth-segment"></div>
-                        <div class="mouth-segment"></div>
-                    </div>
-                </div>
-                <div class="robot-body">
-                    <div class="robot-panel">
-                        <div class="panel-light"></div>
-                        <div class="panel-light"></div>
-                        <div class="panel-light"></div>
-                        <div class="panel-light"></div>
-                        <div class="panel-light"></div>
-                        <div class="panel-light"></div>
-                    </div>
+    <div class="content-overlay">
+        <section class="hero">
+            <div class="hero-text">
+                <h1>혁신적인 기술로<br>미래를 설계합니다</h1>
+                <p>AI, IT, 전자/전기, 홈페이지 제작, 업무 자동화까지<br>Cayson Tech가 함께합니다</p>
+                <div class="hero-buttons">
+                    <a href="#contact" class="btn btn-primary">상담 신청</a>
+                    <a href="#services" class="btn btn-outline">서비스 보기</a>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="services" id="services">
-        <div class="section-title">
-            <h2>전문 서비스</h2>
-            <p>최고의 기술 전문가들이 제공하는 맞춤형 솔루션</p>
-        </div>
-        <div class="services-grid">
-            <div class="service-card">
-                <div class="service-icon">🤖</div>
-                <h3>AI & 머신러닝</h3>
-                <p>최신 AI 기술을 활용한 스마트 솔루션 개발 및 데이터 분석 서비스를 제공합니다.</p>
+        <section class="services" id="services">
+            <div class="section-title">
+                <h2>전문 서비스</h2>
+                <p>최고의 기술 전문가들이 제공하는 맞춤형 솔루션</p>
             </div>
-            <div class="service-card">
-                <div class="service-icon">💻</div>
-                <h3>IT 컨설팅</h3>
-                <p>기업의 디지털 전환을 위한 전략 수립부터 시스템 구축까지 종합적인 IT 컨설팅을 제공합니다.</p>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🤖</div>
+                    <h3>AI & 머신러닝</h3>
+                    <p>최신 AI 기술을 활용한 스마트 솔루션 개발 및 데이터 분석 서비스를 제공합니다.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">💻</div>
+                    <h3>IT 컨설팅</h3>
+                    <p>기업의 디지털 전환을 위한 전략 수립부터 시스템 구축까지 종합적인 IT 컨설팅을 제공합니다.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">⚡</div>
+                    <h3>전자/전기 시스템</h3>
+                    <p>IoT, 임베디드 시스템, 전력 제어 등 전자/전기 분야의 전문 기술 솔루션을 제공합니다.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🌐</div>
+                    <h3>웹 개발</h3>
+                    <p>반응형 웹사이트부터 복잡한 웹 애플리케이션까지 최신 기술로 구현합니다.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🔄</div>
+                    <h3>업무 자동화</h3>
+                    <p>반복적인 업무를 자동화하여 생산성을 극대화하는 맞춤형 자동화 솔루션을 제공합니다.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">📚</div>
+                    <h3>기술 교육</h3>
+                    <p>실무 중심의 체계적인 교육 프로그램으로 귀사의 기술 역량을 강화합니다.</p>
+                </div>
             </div>
-            <div class="service-card">
-                <div class="service-icon">⚡</div>
-                <h3>전자/전기 시스템</h3>
-                <p>IoT, 임베디드 시스템, 전력 제어 등 전자/전기 분야의 전문 기술 솔루션을 제공합니다.</p>
-            </div>
-            <div class="service-card">
-                <div class="service-icon">🌐</div>
-                <h3>웹 개발</h3>
-                <p>반응형 웹사이트부터 복잡한 웹 애플리케이션까지 최신 기술로 구현합니다.</p>
-            </div>
-            <div class="service-card">
-                <div class="service-icon">🔄</div>
-                <h3>업무 자동화</h3>
-                <p>반복적인 업무를 자동화하여 생산성을 극대화하는 맞춤형 자동화 솔루션을 제공합니다.</p>
-            </div>
-            <div class="service-card">
-                <div class="service-icon">📚</div>
-                <h3>기술 교육</h3>
-                <p>실무 중심의 체계적인 교육 프로그램으로 귀사의 기술 역량을 강화합니다.</p>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="stats" id="about">
-        <div class="section-title">
-            <h2>신뢰할 수 있는 파트너</h2>
-            <p>숫자로 증명하는 Cayson Tech의 전문성</p>
-        </div>
-        <div class="stats-grid">
-            <div class="stat">
-                <div class="stat-number">200+</div>
-                <div class="stat-label">완료된 프로젝트</div>
-            </div>
-            <div class="stat">
-                <div class="stat-number">98%</div>
-                <div class="stat-label">고객 만족도</div>
-            </div>
-            <div class="stat">
-                <div class="stat-number">50+</div>
-                <div class="stat-label">기업 파트너</div>
-            </div>
-        </div>
-    </section>
+        <footer id="contact">
+            <h2 style="margin-bottom: 20px;">프로젝트를 시작할 준비가 되셨나요?</h2>
+            <p style="margin-bottom: 30px;">Cayson Tech와 함께 혁신적인 기술 솔루션을 경험해보세요.</p>
+            <a href="mailto:contact@caysontech.com" class="btn btn-primary">지금 상담하기</a>
+            <p style="margin-top: 50px; font-size: 0.9em;">&copy; 2026 Cayson Tech. All rights reserved.</p>
+        </footer>
+    </div>
 
-    <section class="cta" id="contact">
-        <h2>프로젝트를 시작할 준비가 되셨나요?</h2>
-        <p>Cayson Tech와 함께 혁신적인 기술 솔루션을 경험해보세요.</p>
-        <a href="mailto:contact@caysontech.com" class="btn btn-primary">지금 상담하기</a>
-    </section>
-
-    <footer>
-        &copy; 2026 Cayson Tech. All rights reserved.
-    </footer>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
-        const robot = document.getElementById('robot');
-        const robotHead = document.getElementById('robotHead');
-        const leftPupil = document.getElementById('leftPupil');
-        const rightPupil = document.getElementById('rightPupil');
+        let scene, camera, renderer, robot;
+        let mouseX = 0, mouseY = 0;
+        let targetRotationX = 0, targetRotationY = 0;
 
-        let mouseX = window.innerWidth / 2;
-        let mouseY = window.innerHeight / 2;
-        let currentRotateX = 0;
-        let currentRotateY = 0;
-        let targetRotateX = 0;
-        let targetRotateY = 0;
+        function init() {
+            const container = document.getElementById('canvas-container');
 
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-        });
+            scene = new THREE.Scene();
 
-        function updateRobot() {
-            const headRect = robotHead.getBoundingClientRect();
-            const headCenterX = headRect.left + headRect.width / 2;
-            const headCenterY = headRect.top + headRect.height / 2;
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 5;
 
-            const deltaX = mouseX - headCenterX;
-            const deltaY = mouseY - headCenterY;
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            container.appendChild(renderer.domElement);
 
-            const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-            const maxDistance = 600;
-            const normalizedDistance = Math.min(distance / maxDistance, 1);
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+            scene.add(ambientLight);
 
-            targetRotateY = (deltaX / window.innerWidth) * 45 * normalizedDistance;
-            targetRotateX = -(deltaY / window.innerHeight) * 35 * normalizedDistance;
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+            directionalLight.position.set(5, 5, 5);
+            scene.add(directionalLight);
 
-            targetRotateY = Math.max(-45, Math.min(45, targetRotateY));
-            targetRotateX = Math.max(-35, Math.min(35, targetRotateX));
+            const purpleLight = new THREE.PointLight(0x9d4edd, 2, 100);
+            purpleLight.position.set(-3, 2, 3);
+            scene.add(purpleLight);
 
-            currentRotateX += (targetRotateX - currentRotateX) * 0.1;
-            currentRotateY += (targetRotateY - currentRotateY) * 0.1;
+            const pinkLight = new THREE.PointLight(0xff0080, 1.5, 100);
+            pinkLight.position.set(3, -2, 3);
+            scene.add(pinkLight);
 
-            robotHead.style.transform = `
-                rotateX(${currentRotateX}deg)
-                rotateY(${currentRotateY}deg)
-                translateZ(0px)
-            `;
+            createRobot();
 
-            const bodyRotateX = currentRotateX * 0.3;
-            const bodyRotateY = currentRotateY * 0.3;
-            robot.style.transform = `
-                rotateX(${bodyRotateX}deg)
-                rotateY(${bodyRotateY}deg)
-            `;
+            document.addEventListener('mousemove', onMouseMove);
+            window.addEventListener('resize', onWindowResize);
 
-            requestAnimationFrame(updateRobot);
+            animate();
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            updateRobot();
-        });
+        function createRobot() {
+            robot = new THREE.Group();
+
+            // Base/Body - metallic gradient cube
+            const bodyGeometry = new THREE.BoxGeometry(2, 2, 2);
+
+            const canvas = document.createElement('canvas');
+            canvas.width = 256;
+            canvas.height = 256;
+            const ctx = canvas.getContext('2d');
+            const gradient = ctx.createLinearGradient(0, 0, 256, 256);
+            gradient.addColorStop(0, '#9d4edd');
+            gradient.addColorStop(0.5, '#7b2cbf');
+            gradient.addColorStop(1, '#5a189a');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 256, 256);
+
+            const bodyTexture = new THREE.CanvasTexture(canvas);
+            const bodyMaterial = new THREE.MeshStandardMaterial({
+                map: bodyTexture,
+                metalness: 0.8,
+                roughness: 0.2
+            });
+
+            const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
+            body.position.y = -2;
+            robot.add(body);
+
+            // Neck - cylindrical connector
+            const neckGeometry = new THREE.CylinderGeometry(0.25, 0.25, 0.6, 32);
+            const neckMaterial = new THREE.MeshStandardMaterial({
+                color: 0x1a1a2e,
+                metalness: 0.9,
+                roughness: 0.1
+            });
+            const neck = new THREE.Mesh(neckGeometry, neckMaterial);
+            neck.position.y = -0.4;
+            robot.add(neck);
+
+            // Head - rounded box (purple gradient face)
+            const headGroup = new THREE.Group();
+
+            // Main head body
+            const headGeometry = new THREE.BoxGeometry(2.2, 1.2, 0.6);
+            const headCanvas = document.createElement('canvas');
+            headCanvas.width = 256;
+            headCanvas.height = 256;
+            const headCtx = headCanvas.getContext('2d');
+            const headGradient = headCtx.createLinearGradient(0, 0, 256, 256);
+            headGradient.addColorStop(0, '#c77dff');
+            headGradient.addColorStop(0.5, '#9d4edd');
+            headGradient.addColorStop(1, '#7b2cbf');
+            headCtx.fillStyle = headGradient;
+            headCtx.fillRect(0, 0, 256, 256);
+
+            const headTexture = new THREE.CanvasTexture(headCanvas);
+            const headMaterial = new THREE.MeshStandardMaterial({
+                map: headTexture,
+                metalness: 0.6,
+                roughness: 0.3
+            });
+
+            const head = new THREE.Mesh(headGeometry, headMaterial);
+            headGroup.add(head);
+
+            // Black sides of head
+            const sideGeometry = new THREE.BoxGeometry(0.4, 1.2, 0.6);
+            const sideMaterial = new THREE.MeshStandardMaterial({
+                color: 0x1a1a2e,
+                metalness: 0.8,
+                roughness: 0.2
+            });
+
+            const leftSide = new THREE.Mesh(sideGeometry, sideMaterial);
+            leftSide.position.x = -1.3;
+            headGroup.add(leftSide);
+
+            const rightSide = new THREE.Mesh(sideGeometry, sideMaterial);
+            rightSide.position.x = 1.3;
+            headGroup.add(rightSide);
+
+            // Eyes - white spheres
+            const eyeGeometry = new THREE.SphereGeometry(0.2, 32, 32);
+            const eyeMaterial = new THREE.MeshStandardMaterial({
+                color: 0xffffff,
+                emissive: 0xffffff,
+                emissiveIntensity: 0.3,
+                metalness: 0.1,
+                roughness: 0.4
+            });
+
+            const leftEye = new THREE.Mesh(eyeGeometry, eyeMaterial);
+            leftEye.position.set(-0.4, 0.1, 0.35);
+            headGroup.add(leftEye);
+
+            const rightEye = new THREE.Mesh(eyeGeometry, eyeMaterial);
+            rightEye.position.set(0.4, 0.1, 0.35);
+            headGroup.add(rightEye);
+
+            // Red antenna on right side
+            const antennaGeometry = new THREE.CylinderGeometry(0.08, 0.08, 0.4, 16);
+            const antennaMaterial = new THREE.MeshStandardMaterial({
+                color: 0xff0000,
+                emissive: 0xff0000,
+                emissiveIntensity: 0.5,
+                metalness: 0.5,
+                roughness: 0.3
+            });
+            const antenna = new THREE.Mesh(antennaGeometry, antennaMaterial);
+            antenna.position.set(1.0, 0.5, 0);
+            antenna.rotation.z = Math.PI / 6;
+            headGroup.add(antenna);
+
+            const antennaTipGeometry = new THREE.SphereGeometry(0.12, 16, 16);
+            const antennaTip = new THREE.Mesh(antennaTipGeometry, antennaMaterial);
+            antennaTip.position.set(1.15, 0.75, 0);
+            headGroup.add(antennaTip);
+
+            // Edge glow/outline effect
+            const edgeGeometry = new THREE.EdgesGeometry(headGeometry);
+            const edgeMaterial = new THREE.LineBasicMaterial({
+                color: 0xc77dff,
+                linewidth: 2
+            });
+            const edges = new THREE.LineSegments(edgeGeometry, edgeMaterial);
+            headGroup.add(edges);
+
+            headGroup.position.y = 0.3;
+            robot.add(headGroup);
+
+            robot.position.y = 0;
+            scene.add(robot);
+        }
+
+        function onMouseMove(event) {
+            mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+            mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+        }
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            if (robot) {
+                targetRotationY = mouseX * 0.5;
+                targetRotationX = mouseY * 0.3;
+
+                robot.rotation.y += (targetRotationY - robot.rotation.y) * 0.05;
+                robot.rotation.x += (targetRotationX - robot.rotation.x) * 0.05;
+
+                robot.position.y = 0.5 + Math.sin(Date.now() * 0.001) * 0.1;
+            }
+
+            renderer.render(scene, camera);
+        }
+
+        init();
     </script>
 
 </body>
