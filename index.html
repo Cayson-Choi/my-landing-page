@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MyBrand - Creative Digital Solutions</title>
+    <title>Cayson Tech - AI & IT Solutions</title>
     <style>
         *, *::before, *::after {
             margin: 0;
@@ -12,13 +12,14 @@
         }
 
         :root {
-            --primary: #6c5ce7;
-            --primary-dark: #5a4bd1;
-            --accent: #00cec9;
-            --dark: #0a0a23;
-            --dark-light: #1a1a3e;
-            --text: #e0e0e0;
-            --text-muted: #a0a0b8;
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --accent: #06b6d4;
+            --accent-light: #22d3ee;
+            --dark: #0f0f23;
+            --dark-light: #1a1a35;
+            --text: #e5e7eb;
+            --text-muted: #9ca3af;
         }
 
         html {
@@ -30,6 +31,7 @@
             background-color: var(--dark);
             color: var(--text);
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
         nav {
@@ -41,20 +43,24 @@
             justify-content: space-between;
             align-items: center;
             z-index: 100;
-            background: rgba(10, 10, 35, 0.85);
-            backdrop-filter: blur(12px);
+            background: rgba(15, 15, 35, 0.9);
+            backdrop-filter: blur(16px);
             border-bottom: 1px solid rgba(255,255,255,0.05);
         }
 
         .logo {
-            font-size: 1.5em;
-            font-weight: 700;
+            font-size: 1.6em;
+            font-weight: 800;
             color: white;
             text-decoration: none;
+            letter-spacing: -0.5px;
         }
 
         .logo span {
-            color: var(--accent);
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .nav-links {
@@ -67,6 +73,7 @@
             color: var(--text-muted);
             text-decoration: none;
             font-size: 0.95em;
+            font-weight: 500;
             transition: color 0.3s;
         }
 
@@ -78,198 +85,402 @@
             min-height: 100vh;
             display: flex;
             align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 120px 20px 80px;
+            justify-content: space-between;
+            padding: 140px 60px 80px;
             position: relative;
             overflow: hidden;
+            gap: 60px;
         }
 
         .hero::before {
             content: '';
             position: absolute;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(108,92,231,0.15), transparent 70%);
-            top: -100px;
-            right: -100px;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(99,102,241,0.12), transparent 70%);
+            top: -200px;
+            right: -200px;
             border-radius: 50%;
+            animation: pulse 8s ease-in-out infinite;
         }
 
-        .hero::after {
-            content: '';
-            position: absolute;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(0,206,201,0.1), transparent 70%);
-            bottom: -50px;
-            left: -50px;
-            border-radius: 50%;
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.12; }
+            50% { transform: scale(1.1); opacity: 0.18; }
         }
 
         .hero-content {
             position: relative;
             z-index: 1;
-            max-width: 700px;
+            max-width: 600px;
         }
 
         .hero-badge {
-            display: inline-block;
-            padding: 6px 16px;
-            border: 1px solid rgba(108,92,231,0.4);
-            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 18px;
+            border: 1px solid rgba(99,102,241,0.4);
+            border-radius: 24px;
             font-size: 0.85em;
             color: var(--primary);
-            margin-bottom: 24px;
-            background: rgba(108,92,231,0.08);
+            margin-bottom: 28px;
+            background: rgba(99,102,241,0.08);
+        }
+
+        .badge-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: blink 2s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
         }
 
         .hero h1 {
-            font-size: 3.5em;
-            font-weight: 700;
-            line-height: 1.15;
-            margin-bottom: 20px;
+            font-size: 4em;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 24px;
             color: white;
+            letter-spacing: -1px;
         }
 
         .hero h1 .highlight {
-            background: linear-gradient(135deg, var(--primary), var(--accent));
+            background: linear-gradient(135deg, var(--primary), var(--accent-light));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
         .hero p {
-            font-size: 1.15em;
+            font-size: 1.2em;
             color: var(--text-muted);
             margin-bottom: 36px;
-            max-width: 520px;
-            margin-left: auto;
-            margin-right: auto;
+            line-height: 1.7;
         }
 
         .hero-buttons {
             display: flex;
             gap: 16px;
-            justify-content: center;
             flex-wrap: wrap;
         }
 
         .btn {
             padding: 14px 32px;
-            border-radius: 8px;
+            border-radius: 10px;
             font-size: 1em;
             font-weight: 600;
             text-decoration: none;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: all 0.3s;
             cursor: pointer;
             border: none;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
         }
 
         .btn-primary {
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
-            box-shadow: 0 4px 20px rgba(108,92,231,0.3);
+            box-shadow: 0 4px 24px rgba(99,102,241,0.3);
         }
 
         .btn-primary:hover {
-            box-shadow: 0 6px 28px rgba(108,92,231,0.45);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 32px rgba(99,102,241,0.5);
         }
 
         .btn-outline {
             background: transparent;
             color: var(--text);
-            border: 1px solid rgba(255,255,255,0.15);
+            border: 1.5px solid rgba(255,255,255,0.15);
         }
 
         .btn-outline:hover {
-            border-color: rgba(255,255,255,0.35);
-            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+            border-color: rgba(255,255,255,0.4);
+            background: rgba(255,255,255,0.03);
         }
 
-        section {
-            padding: 100px 20px;
+        /* Robot Character */
+        .robot-container {
+            position: relative;
+            width: 400px;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            perspective: 1000px;
+        }
+
+        .robot {
+            position: relative;
+            width: 280px;
+            height: 350px;
+            transition: transform 0.1s ease-out;
+        }
+
+        /* Robot Head */
+        .robot-head {
+            position: relative;
+            width: 160px;
+            height: 180px;
+            background: linear-gradient(145deg, #2a2a4a, #1f1f3a);
+            border-radius: 40px;
+            margin: 0 auto 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+            border: 3px solid rgba(99,102,241,0.3);
+            transition: transform 0.15s ease-out;
+        }
+
+        .robot-antenna {
+            position: absolute;
+            width: 4px;
+            height: 40px;
+            background: linear-gradient(to top, var(--primary), var(--accent));
+            top: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        .robot-antenna::after {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background: var(--accent);
+            border-radius: 50%;
+            top: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 0 20px var(--accent);
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px var(--accent); }
+            50% { box-shadow: 0 0 30px var(--accent), 0 0 40px var(--accent); }
+        }
+
+        /* Robot Eyes */
+        .robot-eyes {
+            position: absolute;
+            top: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 30px;
+        }
+
+        .eye {
+            position: relative;
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .pupil {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle at 30% 30%, #4f46e5, #1e1b4b);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s ease-out;
+        }
+
+        .pupil::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: white;
+            border-radius: 50%;
+            top: 4px;
+            left: 5px;
+        }
+
+        /* Robot Mouth */
+        .robot-mouth {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 8px;
+            background: rgba(99,102,241,0.4);
+            border-radius: 4px;
+            display: flex;
+            gap: 3px;
+            padding: 2px 4px;
+        }
+
+        .mouth-segment {
+            flex: 1;
+            background: var(--accent);
+            border-radius: 2px;
+            animation: speak 1.5s ease-in-out infinite;
+        }
+
+        .mouth-segment:nth-child(2) { animation-delay: 0.1s; }
+        .mouth-segment:nth-child(3) { animation-delay: 0.2s; }
+        .mouth-segment:nth-child(4) { animation-delay: 0.3s; }
+
+        @keyframes speak {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        /* Robot Body */
+        .robot-body {
+            position: relative;
+            width: 200px;
+            height: 140px;
+            background: linear-gradient(145deg, #2a2a4a, #1f1f3a);
+            border-radius: 20px;
+            margin: 0 auto;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+            border: 3px solid rgba(99,102,241,0.3);
+        }
+
+        .robot-panel {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 140px;
+            height: 80px;
+            background: rgba(99,102,241,0.1);
+            border-radius: 12px;
+            border: 2px solid rgba(99,102,241,0.3);
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            padding: 12px;
+        }
+
+        .panel-light {
+            width: 100%;
+            height: 100%;
+            background: var(--primary);
+            border-radius: 4px;
+            opacity: 0.4;
+            animation: flicker 3s ease-in-out infinite;
+        }
+
+        .panel-light:nth-child(1) { animation-delay: 0s; }
+        .panel-light:nth-child(2) { animation-delay: 0.5s; }
+        .panel-light:nth-child(3) { animation-delay: 1s; }
+        .panel-light:nth-child(4) { animation-delay: 1.5s; }
+        .panel-light:nth-child(5) { animation-delay: 2s; }
+        .panel-light:nth-child(6) { animation-delay: 2.5s; }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 1; }
+        }
+
+        /* Services Section */
+        .services {
+            background: var(--dark-light);
+            padding: 120px 60px;
         }
 
         .section-title {
             text-align: center;
-            margin-bottom: 60px;
+            margin-bottom: 70px;
         }
 
         .section-title h2 {
-            font-size: 2.2em;
+            font-size: 2.8em;
+            font-weight: 800;
             color: white;
-            margin-bottom: 12px;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
         }
 
         .section-title p {
             color: var(--text-muted);
-            font-size: 1.05em;
+            font-size: 1.15em;
         }
 
-        .features {
-            background: var(--dark-light);
-        }
-
-        .features-grid {
+        .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 28px;
-            max-width: 1100px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 32px;
+            max-width: 1200px;
             margin: 0 auto;
         }
 
-        .feature-card {
+        .service-card {
             background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 16px;
-            padding: 36px 28px;
-            transition: transform 0.3s, border-color 0.3s;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px;
+            padding: 40px 32px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
         }
 
-        .feature-card:hover {
-            transform: translateY(-4px);
-            border-color: rgba(108,92,231,0.3);
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transform: scaleX(0);
+            transition: transform 0.3s;
         }
 
-        .feature-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.4em;
+        .service-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(99,102,241,0.3);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+        }
+
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .service-icon {
+            font-size: 2.5em;
             margin-bottom: 20px;
         }
 
-        .feature-card:nth-child(1) .feature-icon { background: rgba(108,92,231,0.15); }
-        .feature-card:nth-child(2) .feature-icon { background: rgba(0,206,201,0.15); }
-        .feature-card:nth-child(3) .feature-icon { background: rgba(253,203,110,0.15); }
-
-        .feature-card h3 {
-            font-size: 1.2em;
+        .service-card h3 {
+            font-size: 1.4em;
             color: white;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            font-weight: 700;
         }
 
-        .feature-card p {
+        .service-card p {
             color: var(--text-muted);
-            font-size: 0.95em;
+            line-height: 1.7;
         }
 
+        /* Stats Section */
         .stats {
+            padding: 100px 60px;
+            text-align: center;
+        }
+
+        .stats-grid {
             display: flex;
             justify-content: center;
-            gap: 60px;
+            gap: 80px;
             flex-wrap: wrap;
-            max-width: 800px;
+            max-width: 1000px;
             margin: 0 auto;
-            padding: 80px 20px;
         }
 
         .stat {
@@ -277,49 +488,78 @@
         }
 
         .stat-number {
-            font-size: 2.8em;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
+            font-size: 3.5em;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--accent-light));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            margin-bottom: 8px;
         }
 
         .stat-label {
             color: var(--text-muted);
-            font-size: 0.95em;
-            margin-top: 4px;
+            font-size: 1.05em;
         }
 
+        /* CTA Section */
         .cta {
             text-align: center;
             background: var(--dark-light);
-            padding: 100px 20px;
+            padding: 120px 60px;
         }
 
         .cta h2 {
-            font-size: 2.4em;
+            font-size: 3em;
+            font-weight: 800;
             color: white;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
         }
 
         .cta p {
             color: var(--text-muted);
-            margin-bottom: 32px;
-            font-size: 1.1em;
+            margin-bottom: 40px;
+            font-size: 1.2em;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         footer {
             text-align: center;
-            padding: 40px 20px;
+            padding: 50px 20px;
             color: var(--text-muted);
-            font-size: 0.9em;
             border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        @media (max-width: 1024px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding: 140px 40px 80px;
+            }
+
+            .hero-content {
+                max-width: 100%;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .robot-container {
+                width: 300px;
+                height: 400px;
+            }
+
+            .robot {
+                transform: scale(0.85);
+            }
         }
 
         @media (max-width: 768px) {
             nav {
-                padding: 16px 20px;
+                padding: 16px 24px;
             }
 
             .nav-links {
@@ -327,15 +567,19 @@
             }
 
             .hero h1 {
-                font-size: 2.2em;
+                font-size: 2.5em;
             }
 
-            .stats {
-                gap: 36px;
-            }
-
-            .stat-number {
+            .section-title h2 {
                 font-size: 2em;
+            }
+
+            .services, .stats, .cta {
+                padding: 80px 24px;
+            }
+
+            .stats-grid {
+                gap: 50px;
             }
         }
     </style>
@@ -343,76 +587,179 @@
 <body>
 
     <nav>
-        <a href="#" class="logo">My<span>Brand</span></a>
+        <a href="#" class="logo">Cayson<span>Tech</span></a>
         <ul class="nav-links">
-            <li><a href="#features">Features</a></li>
-            <li><a href="#stats">About</a></li>
-            <li><a href="#cta">Contact</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
         </ul>
     </nav>
 
     <section class="hero">
         <div class="hero-content">
-            <div class="hero-badge">Welcome to MyBrand</div>
-            <h1>Build Something <span class="highlight">Amazing</span> Together</h1>
-            <p>We craft digital experiences that inspire and deliver results. Transform your vision into reality with cutting-edge solutions.</p>
+            <div class="hero-badge">
+                <span class="badge-dot"></span>
+                AI & IT Solutions Leader
+            </div>
+            <h1>혁신적인 <span class="highlight">기술</span>로<br>미래를 설계합니다</h1>
+            <p>AI, IT, 전자/전기, 홈페이지 제작, 업무 자동화까지. Cayson Tech는 차세대 기술 솔루션으로 귀사의 디지털 전환을 완성합니다.</p>
             <div class="hero-buttons">
-                <a href="#cta" class="btn btn-primary">Get Started</a>
-                <a href="#features" class="btn btn-outline">Learn More</a>
+                <a href="#contact" class="btn btn-primary">상담 신청</a>
+                <a href="#services" class="btn btn-outline">서비스 보기</a>
+            </div>
+        </div>
+
+        <div class="robot-container">
+            <div class="robot" id="robot">
+                <div class="robot-head" id="robotHead">
+                    <div class="robot-antenna"></div>
+                    <div class="robot-eyes">
+                        <div class="eye">
+                            <div class="pupil" id="leftPupil"></div>
+                        </div>
+                        <div class="eye">
+                            <div class="pupil" id="rightPupil"></div>
+                        </div>
+                    </div>
+                    <div class="robot-mouth">
+                        <div class="mouth-segment"></div>
+                        <div class="mouth-segment"></div>
+                        <div class="mouth-segment"></div>
+                        <div class="mouth-segment"></div>
+                    </div>
+                </div>
+                <div class="robot-body">
+                    <div class="robot-panel">
+                        <div class="panel-light"></div>
+                        <div class="panel-light"></div>
+                        <div class="panel-light"></div>
+                        <div class="panel-light"></div>
+                        <div class="panel-light"></div>
+                        <div class="panel-light"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <section class="features" id="features">
+    <section class="services" id="services">
         <div class="section-title">
-            <h2>What We Offer</h2>
-            <p>Everything you need to bring your ideas to life</p>
+            <h2>전문 서비스</h2>
+            <p>최고의 기술 전문가들이 제공하는 맞춤형 솔루션</p>
         </div>
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">&#9889;</div>
-                <h3>Lightning Fast</h3>
-                <p>Optimized performance that loads in milliseconds. Your users deserve speed and we deliver it.</p>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">🤖</div>
+                <h3>AI & 머신러닝</h3>
+                <p>최신 AI 기술을 활용한 스마트 솔루션 개발 및 데이터 분석 서비스를 제공합니다.</p>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">&#127912;</div>
-                <h3>Beautiful Design</h3>
-                <p>Pixel-perfect interfaces crafted with attention to every detail. Design that tells your story.</p>
+            <div class="service-card">
+                <div class="service-icon">💻</div>
+                <h3>IT 컨설팅</h3>
+                <p>기업의 디지털 전환을 위한 전략 수립부터 시스템 구축까지 종합적인 IT 컨설팅을 제공합니다.</p>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">&#128736;</div>
-                <h3>Scalable Solutions</h3>
-                <p>Built to grow with your business. From startup to enterprise, we've got you covered.</p>
+            <div class="service-card">
+                <div class="service-icon">⚡</div>
+                <h3>전자/전기 시스템</h3>
+                <p>IoT, 임베디드 시스템, 전력 제어 등 전자/전기 분야의 전문 기술 솔루션을 제공합니다.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🌐</div>
+                <h3>웹 개발</h3>
+                <p>반응형 웹사이트부터 복잡한 웹 애플리케이션까지 최신 기술로 구현합니다.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🔄</div>
+                <h3>업무 자동화</h3>
+                <p>반복적인 업무를 자동화하여 생산성을 극대화하는 맞춤형 자동화 솔루션을 제공합니다.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">📚</div>
+                <h3>기술 교육</h3>
+                <p>실무 중심의 체계적인 교육 프로그램으로 귀사의 기술 역량을 강화합니다.</p>
             </div>
         </div>
     </section>
 
-    <section id="stats">
-        <div class="stats">
+    <section class="stats" id="about">
+        <div class="section-title">
+            <h2>신뢰할 수 있는 파트너</h2>
+            <p>숫자로 증명하는 Cayson Tech의 전문성</p>
+        </div>
+        <div class="stats-grid">
             <div class="stat">
-                <div class="stat-number">150+</div>
-                <div class="stat-label">Projects Delivered</div>
+                <div class="stat-number">200+</div>
+                <div class="stat-label">완료된 프로젝트</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">98%</div>
+                <div class="stat-label">고객 만족도</div>
             </div>
             <div class="stat">
                 <div class="stat-number">50+</div>
-                <div class="stat-label">Happy Clients</div>
-            </div>
-            <div class="stat">
-                <div class="stat-number">99%</div>
-                <div class="stat-label">Satisfaction Rate</div>
+                <div class="stat-label">기업 파트너</div>
             </div>
         </div>
     </section>
 
-    <section class="cta" id="cta">
-        <h2>Ready to Start?</h2>
-        <p>Let's build something great together.</p>
-        <a href="mailto:hello@mybrand.com" class="btn btn-primary">Contact Us</a>
+    <section class="cta" id="contact">
+        <h2>프로젝트를 시작할 준비가 되셨나요?</h2>
+        <p>Cayson Tech와 함께 혁신적인 기술 솔루션을 경험해보세요.</p>
+        <a href="mailto:contact@caysontech.com" class="btn btn-primary">지금 상담하기</a>
     </section>
 
     <footer>
-        &copy; 2026 MyBrand. All rights reserved.
+        &copy; 2026 Cayson Tech. All rights reserved.
     </footer>
+
+    <script>
+        const robot = document.getElementById('robot');
+        const robotHead = document.getElementById('robotHead');
+        const leftPupil = document.getElementById('leftPupil');
+        const rightPupil = document.getElementById('rightPupil');
+
+        let mouseX = 0;
+        let mouseY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            updateRobot();
+        });
+
+        function updateRobot() {
+            const robotRect = robot.getBoundingClientRect();
+            const robotCenterX = robotRect.left + robotRect.width / 2;
+            const robotCenterY = robotRect.top + robotRect.height / 2;
+
+            const deltaX = mouseX - robotCenterX;
+            const deltaY = mouseY - robotCenterY;
+
+            const angle = Math.atan2(deltaY, deltaX);
+            const distance = Math.min(Math.sqrt(deltaX * deltaX + deltaY * deltaY) / 30, 10);
+
+            const headRotateX = (deltaY / window.innerHeight) * 15;
+            const headRotateY = (deltaX / window.innerWidth) * 15;
+            robotHead.style.transform = `rotateX(${-headRotateX}deg) rotateY(${headRotateY}deg)`;
+
+            const bodyRotateX = (deltaY / window.innerHeight) * 5;
+            const bodyRotateY = (deltaX / window.innerWidth) * 5;
+            robot.style.transform = `rotateX(${-bodyRotateX}deg) rotateY(${bodyRotateY}deg)`;
+
+            const pupilX = Math.cos(angle) * Math.min(distance, 8);
+            const pupilY = Math.sin(angle) * Math.min(distance, 8);
+
+            leftPupil.style.transform = `translate(calc(-50% + ${pupilX}px), calc(-50% + ${pupilY}px))`;
+            rightPupil.style.transform = `translate(calc(-50% + ${pupilX}px), calc(-50% + ${pupilY}px))`;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const heroRect = document.querySelector('.hero').getBoundingClientRect();
+            mouseX = heroRect.left + heroRect.width / 2;
+            mouseY = heroRect.top + heroRect.height / 2;
+            updateRobot();
+        });
+    </script>
 
 </body>
 </html>
