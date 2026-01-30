@@ -211,14 +211,15 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            perspective: 1000px;
+            perspective: 1500px;
         }
 
         .robot {
             position: relative;
             width: 280px;
             height: 350px;
-            transition: transform 0.1s ease-out;
+            transform-style: preserve-3d;
+            transition: transform 0.2s ease-out;
         }
 
         /* Robot Head */
@@ -229,9 +230,37 @@
             background: linear-gradient(145deg, #2a2a4a, #1f1f3a);
             border-radius: 40px;
             margin: 0 auto 10px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+            box-shadow:
+                0 10px 40px rgba(0,0,0,0.4),
+                inset 0 2px 10px rgba(99,102,241,0.1),
+                inset 0 -2px 10px rgba(0,0,0,0.3);
             border: 3px solid rgba(99,102,241,0.3);
-            transition: transform 0.15s ease-out;
+            transition: transform 0.2s ease-out;
+            transform-style: preserve-3d;
+        }
+
+        .robot-head::before {
+            content: '';
+            position: absolute;
+            top: 20%;
+            left: -10px;
+            width: 30px;
+            height: 60%;
+            background: linear-gradient(90deg, transparent, rgba(99,102,241,0.15));
+            border-radius: 20px 0 0 20px;
+            transform: translateZ(-20px);
+        }
+
+        .robot-head::after {
+            content: '';
+            position: absolute;
+            top: 20%;
+            right: -10px;
+            width: 30px;
+            height: 60%;
+            background: linear-gradient(-90deg, transparent, rgba(99,102,241,0.15));
+            border-radius: 0 20px 20px 0;
+            transform: translateZ(-20px);
         }
 
         .robot-antenna {
@@ -241,8 +270,9 @@
             background: linear-gradient(to top, var(--primary), var(--accent));
             top: -35px;
             left: 50%;
-            transform: translateX(-50%);
+            transform: translateX(-50%) translateZ(10px);
             border-radius: 2px;
+            box-shadow: 0 0 10px rgba(99,102,241,0.5);
         }
 
         .robot-antenna::after {
@@ -281,7 +311,10 @@
             background: white;
             border-radius: 50%;
             overflow: hidden;
-            box-shadow: inset 0 2px 8px rgba(0,0,0,0.2);
+            box-shadow:
+                inset 0 2px 8px rgba(0,0,0,0.2),
+                0 2px 8px rgba(0,0,0,0.1);
+            transform: translateZ(25px);
         }
 
         .pupil {
@@ -293,7 +326,6 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            transition: transform 0.1s ease-out;
         }
 
         .pupil::after {
@@ -312,7 +344,7 @@
             position: absolute;
             bottom: 50px;
             left: 50%;
-            transform: translateX(-50%);
+            transform: translateX(-50%) translateZ(20px);
             width: 80px;
             height: 8px;
             background: rgba(99,102,241,0.4);
@@ -320,6 +352,7 @@
             display: flex;
             gap: 3px;
             padding: 2px 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
 
         .mouth-segment {
@@ -346,8 +379,36 @@
             background: linear-gradient(145deg, #2a2a4a, #1f1f3a);
             border-radius: 20px;
             margin: 0 auto;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+            box-shadow:
+                0 8px 30px rgba(0,0,0,0.4),
+                inset 0 2px 10px rgba(99,102,241,0.1),
+                inset 0 -2px 10px rgba(0,0,0,0.3);
             border: 3px solid rgba(99,102,241,0.3);
+            transform-style: preserve-3d;
+        }
+
+        .robot-body::before {
+            content: '';
+            position: absolute;
+            top: 10%;
+            left: -8px;
+            width: 20px;
+            height: 80%;
+            background: linear-gradient(90deg, transparent, rgba(99,102,241,0.1));
+            border-radius: 10px 0 0 10px;
+            transform: translateZ(-15px);
+        }
+
+        .robot-body::after {
+            content: '';
+            position: absolute;
+            top: 10%;
+            right: -8px;
+            width: 20px;
+            height: 80%;
+            background: linear-gradient(-90deg, transparent, rgba(99,102,241,0.1));
+            border-radius: 0 10px 10px 0;
+            transform: translateZ(-15px);
         }
 
         .robot-panel {
@@ -718,45 +779,56 @@
         const leftPupil = document.getElementById('leftPupil');
         const rightPupil = document.getElementById('rightPupil');
 
-        let mouseX = 0;
-        let mouseY = 0;
+        let mouseX = window.innerWidth / 2;
+        let mouseY = window.innerHeight / 2;
+        let currentRotateX = 0;
+        let currentRotateY = 0;
+        let targetRotateX = 0;
+        let targetRotateY = 0;
 
         document.addEventListener('mousemove', (e) => {
             mouseX = e.clientX;
             mouseY = e.clientY;
-            updateRobot();
         });
 
         function updateRobot() {
-            const robotRect = robot.getBoundingClientRect();
-            const robotCenterX = robotRect.left + robotRect.width / 2;
-            const robotCenterY = robotRect.top + robotRect.height / 2;
+            const headRect = robotHead.getBoundingClientRect();
+            const headCenterX = headRect.left + headRect.width / 2;
+            const headCenterY = headRect.top + headRect.height / 2;
 
-            const deltaX = mouseX - robotCenterX;
-            const deltaY = mouseY - robotCenterY;
+            const deltaX = mouseX - headCenterX;
+            const deltaY = mouseY - headCenterY;
 
-            const angle = Math.atan2(deltaY, deltaX);
-            const distance = Math.min(Math.sqrt(deltaX * deltaX + deltaY * deltaY) / 30, 10);
+            const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+            const maxDistance = 600;
+            const normalizedDistance = Math.min(distance / maxDistance, 1);
 
-            const headRotateX = (deltaY / window.innerHeight) * 15;
-            const headRotateY = (deltaX / window.innerWidth) * 15;
-            robotHead.style.transform = `rotateX(${-headRotateX}deg) rotateY(${headRotateY}deg)`;
+            targetRotateY = (deltaX / window.innerWidth) * 45 * normalizedDistance;
+            targetRotateX = -(deltaY / window.innerHeight) * 35 * normalizedDistance;
 
-            const bodyRotateX = (deltaY / window.innerHeight) * 5;
-            const bodyRotateY = (deltaX / window.innerWidth) * 5;
-            robot.style.transform = `rotateX(${-bodyRotateX}deg) rotateY(${bodyRotateY}deg)`;
+            targetRotateY = Math.max(-45, Math.min(45, targetRotateY));
+            targetRotateX = Math.max(-35, Math.min(35, targetRotateX));
 
-            const pupilX = Math.cos(angle) * Math.min(distance, 8);
-            const pupilY = Math.sin(angle) * Math.min(distance, 8);
+            currentRotateX += (targetRotateX - currentRotateX) * 0.1;
+            currentRotateY += (targetRotateY - currentRotateY) * 0.1;
 
-            leftPupil.style.transform = `translate(calc(-50% + ${pupilX}px), calc(-50% + ${pupilY}px))`;
-            rightPupil.style.transform = `translate(calc(-50% + ${pupilX}px), calc(-50% + ${pupilY}px))`;
+            robotHead.style.transform = `
+                rotateX(${currentRotateX}deg)
+                rotateY(${currentRotateY}deg)
+                translateZ(0px)
+            `;
+
+            const bodyRotateX = currentRotateX * 0.3;
+            const bodyRotateY = currentRotateY * 0.3;
+            robot.style.transform = `
+                rotateX(${bodyRotateX}deg)
+                rotateY(${bodyRotateY}deg)
+            `;
+
+            requestAnimationFrame(updateRobot);
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            const heroRect = document.querySelector('.hero').getBoundingClientRect();
-            mouseX = heroRect.left + heroRect.width / 2;
-            mouseY = heroRect.top + heroRect.height / 2;
             updateRobot();
         });
     </script>
