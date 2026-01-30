@@ -310,9 +310,10 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
-        let scene, camera, renderer, robot;
+        let scene, camera, renderer, robot, headGroup;
         let mouseX = 0, mouseY = 0;
         let targetRotationX = 0, targetRotationY = 0;
+        let headRotationX = 0, headRotationY = 0;
 
         function init() {
             const container = document.getElementById('canvas-container');
@@ -390,7 +391,7 @@
             robot.add(neck);
 
             // Head - rounded box (purple gradient face)
-            const headGroup = new THREE.Group();
+            headGroup = new THREE.Group();
 
             // Main head body
             const headGeometry = new THREE.BoxGeometry(2.2, 1.2, 0.6);
@@ -498,14 +499,30 @@
         function animate() {
             requestAnimationFrame(animate);
 
-            if (robot) {
-                targetRotationY = mouseX * 0.5;
-                targetRotationX = mouseY * 0.3;
+            if (robot && headGroup) {
+                // Body follows mouse slowly
+                targetRotationY = mouseX * 0.2;
+                targetRotationX = mouseY * 0.15;
 
-                robot.rotation.y += (targetRotationY - robot.rotation.y) * 0.05;
-                robot.rotation.x += (targetRotationX - robot.rotation.x) * 0.05;
+                robot.rotation.y += (targetRotationY - robot.rotation.y) * 0.03;
+                robot.rotation.x += (targetRotationX - robot.rotation.x) * 0.03;
 
-                robot.position.y = 0.5 + Math.sin(Date.now() * 0.001) * 0.1;
+                // Head follows mouse more actively (nodding and turning)
+                const headTargetY = mouseX * 0.8;
+                const headTargetX = mouseY * 0.6;
+
+                headRotationY += (headTargetY - headRotationY) * 0.08;
+                headRotationX += (headTargetX - headRotationX) * 0.08;
+
+                // Limit head rotation
+                headRotationY = Math.max(-0.8, Math.min(0.8, headRotationY));
+                headRotationX = Math.max(-0.5, Math.min(0.5, headRotationX));
+
+                headGroup.rotation.y = headRotationY;
+                headGroup.rotation.x = headRotationX;
+
+                // Floating animation
+                robot.position.y = Math.sin(Date.now() * 0.001) * 0.15;
             }
 
             renderer.render(scene, camera);
